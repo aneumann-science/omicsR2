@@ -32,3 +32,15 @@
 #'   \item{outcome}{Simulated outcome}
 #' }
 "phenotype"
+
+#' @title Similarity DNA methylation matrix
+#'
+#' @description This similarity matrix is based on the simulated DNA
+#' methylation dataset cpg_simulated
+#'
+#' See extra_scripts/make_similarity_matrix.R for the script used to
+#' generate the similarity matrix
+#'
+#' @format A matrix of 500x500 participants
+#' }
+"Gmt"
