@@ -14,3 +14,14 @@ Gmt <- getG(cpg_simulated)
 # Save methylation similarity matrix
 save(Gmt, file = "data/Gmt.rda")
 
+# Create matrix representing batch effects
+# Every 500 participants are assigned to one batch
+# This represents proper randomization to batches
+Batch <- diag(500)
+Batch[1:100,1:100] <- 1
+Batch[100:200,100:200] <- 1
+Batch[200:300,200:300] <- 1
+Batch[300:400,300:400] <- 1
+Batch[400:500,400:500] <- 1
+save(Batch, file = "data/Batch.rda")
+

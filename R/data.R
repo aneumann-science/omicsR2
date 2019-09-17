@@ -44,3 +44,15 @@
 #' @format A matrix of 500x500 participants
 #' }
 "Gmt"
+
+#' @title Similarity Batch matrix
+#'
+#' @description This similarity matrix represents batch effects
+#' 1 reflects samples from the same batch
+#'
+#' See extra_scripts/make_similarity_matrix.R for the script used to
+#' generate the similarity matrix
+#'
+#' @format A matrix of 500x500 participants
+#' }
+"Batch"

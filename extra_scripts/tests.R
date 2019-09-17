@@ -2,6 +2,7 @@
 # Load all simulated data
 data("phenotype")
 data("Gmt")
+data("Batch")
 
 library(qgg) #GREML
 
@@ -10,11 +11,11 @@ library(qgg) #GREML
 X <- model.matrix(outcome ~ covariate1 + covariate2, data=phenotype)
 
 # GREML
-fitM_full <- greml(y=phenotype$outcome, X=X, GRM=list(methylation=Gmt))
+fitM_full <- greml(y=phenotype$outcome, X=X, GRM=list(methylation=Gmt, batch=Batch))
 
 # Calculate ICC
 # (variance explained by methylation matrix after accounting for covariates)
-fitM_full$theta["methylation"]/(fitM_full$theta["methylation"] +
+fitM_full$theta["methylation"]/(fitM_full$theta["methylation"] + fitM_full$theta["batch"] +
                                   fitM_full$theta["E"])
 
 ### Predict outcome with mehtylation matrix only
