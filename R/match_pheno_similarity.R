@@ -5,7 +5,7 @@
 #' @param id A string for ID variable in phenotype data \code{x},
 #'  which corresponds to \code{rownames} in similarity matrix \code{y}
 #' @return A list of matched phenotype and similarity matrix data.
-#' @example
+#' @examples
 #' # Load datasets
 #' data("phenotype") # Phenotype data
 #' data("Gmt")       # Methylation similarity matrix

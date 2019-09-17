@@ -15,8 +15,20 @@ match_pheno_similarity(phenotype, similarity, id)
 which corresponds to \code{rownames} in similarity matrix \code{y}}
 }
 \value{
-A list of matched phenotype and similarity matrix data
+A list of matched phenotype and similarity matrix data.
 }
 \description{
 Match phenotype and similarity matrix participant order by ID variables
+}
+\examples{
+# Load datasets
+data("phenotype") # Phenotype data
+data("Gmt")       # Methylation similarity matrix
+
+# Match phenotype and methylation similarity matrix by ID variable
+matched.list <- match_pheno_similarity(phenotype, Gmt, "ID")
+
+# Save the data as seperate objects again
+phenotype_matched <- matched.list[[1]]
+Gmt_matched <- matched.list[[2]]
 }
