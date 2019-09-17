@@ -6,6 +6,19 @@ data("Batch")
 
 library(qgg) #GREML
 
+# Match phenotype data and methylation similatry matrix
+# First randomly rearrange the datasets
+phenotype <- phenotype[sample(1:nrow(phenotype)), ]
+Gmt <- Gmt[sample(1:nrow(phenotype)),]
+
+
+# Match phenotype and methylation similarity matrix by ID variable
+matched.list <- match_pheno_similarity(phenotype, Gmt, "ID")
+
+# Save the data as seperate objects again
+phenotype_matched <- matched.list[[1]]
+Gmt_matched <- matched.list[[2]]
+
 ###  Predict outcome with covariates and mehtylation matrix
 # Set up covariates
 X <- model.matrix(outcome ~ covariate1 + covariate2, data=phenotype)
