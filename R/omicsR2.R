@@ -30,7 +30,7 @@
 #' hist(Gmt_variance_explained)
 
 
-omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, validation_proportion = 0.2, repetitions = 100, seed = 0) {
+omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, data, validation_proportion = 0.2, repetitions = 100, seed = 0) {
   # Set up fixed effects models
   fixed_covar.model <- as.formula(paste(outcome, fixed_covar, sep = " ~ "))
 
