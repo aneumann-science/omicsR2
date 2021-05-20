@@ -1,14 +1,18 @@
 Package: omicsR2
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: Estimate variance explained by omics
+Version: 0.9.0
 Author: Alexander Neumann and Esther Walton
 Maintainer: Alexander Neumann <alexander.neumann.science@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: R package to investigate how much variance of a given trait is explained through    the joined effects of different omics (e.g. Methylome),    centered around the `greml` function described in the `qgg` R package
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
     qgg
 RoxygenNote: 6.1.1
+Suggests: 
+    rmarkdown,
+    knitr,
+    BGData
+VignetteBuilder: knitr

@@ -13,7 +13,7 @@
 #' # Match phenotype and methylation similarity matrix by ID variable
 #' matched.list <- match_pheno_similarity(phenotype, Gmt, "ID")
 #'
-#' # Save the data as seperate objects again
+#' # Save the data as separate objects again
 #' phenotype_matched <- matched.list[[1]]
 #' Gmt_matched <- matched.list[[2]]
 match_pheno_similarity <- function(phenotype, similarity, id) {
@@ -22,7 +22,7 @@ match_pheno_similarity <- function(phenotype, similarity, id) {
   similarity_matched <- similarity[na.omit(match(phenotype[,id],
                                                  rownames(similarity))),
                                    na.omit(match(phenotype[,id],
-                                                 rownames(similarity)))]
+                                                 colnames(similarity)))]
   # Then match phenotype data to the already matched similarity matrix
   phenotype_matched <- phenotype[na.omit(match(rownames(similarity_matched),
                                                phenotype[,id])),]
