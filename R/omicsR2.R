@@ -5,6 +5,7 @@
 #' @param fixed_covar A string specyfying the fixed effects.
 #' @param random_full A list of similarity matrices to test.
 #' @param random_baseline A list of similarity matrices to adjust for.
+#' @param data A data.frame containing outcome and covariate data.
 #' @param validation_proportion The size of the validation set in percentage.
 #' @param repetitions How often should cross-validation be repeated.
 #' @param seed Seed to ensure reproducibility of cross-validation.
@@ -17,19 +18,21 @@
 #'
 #' # Regress outcome on methylation similarity matrix, batch similarity matrix,
 #' # two fixed effect covariates with GREML and Monte-Carlo Cross-Validation.
-#' # Returns variance explained minus the variance explained by fixed effect
-#' # covariates and similarity matrices specified in random_baseline.
-#' Gmt_variance_explained <- omicsR2(outcome = outcome, fixed_covar = "covariate1 + covariate2",
-#'  random_full = list(Methylation=Gmt, Batch=Batch),
-#'   random_baseline = list(Batch=Batch), validation_proportion = 0.2,
-#'   repetitions = 100, seed = 20190405)
+#' # Returns variance explained by DNA methylation minus the variance explained by
+#' # fixed effect covariates and similarity matrices specified in random_baseline.
+#' # Test:validation ratio is 80:20 and randomly sampled 100 times.
+#' Gmt_variance_explained <- omicsR2(outcome = "outcome",
+#'                                   fixed_covar = "covariate1 + covariate2",
+#'                                   random_full = list(Methylation=Gmt_matched, Batch=Batch),
+#'                                   random_baseline = list(Batch=Batch),
+#'                                   data = phenotype_matched,
+#'                                   validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 #'
-#' # Examine the variance explained distribution from cross-validation
+#' # Examine the variance explained distribution obtained from cross-validation
+#' head(Gmt_variance_explained)
 #' mean(Gmt_variance_explained)
 #' quantile(Gmt_variance_explained)
-#' hist(Gmt_variance_explained)
-
-
+#' hist(Gmt_variance_explained, breaks = 10)
 omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, data, validation_proportion = 0.2, repetitions = 100, seed = 0) {
   # Set up fixed effects models
   fixed_covar.model <- as.formula(paste(outcome, fixed_covar, sep = " ~ "))

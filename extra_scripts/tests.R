@@ -11,7 +11,6 @@ library(qgg) #GREML
 phenotype <- phenotype[sample(1:nrow(phenotype)), ]
 Gmt <- Gmt[sample(1:nrow(phenotype)),]
 
-
 # Match phenotype and methylation similarity matrix by ID variable
 matched.list <- match_pheno_similarity(phenotype, Gmt, "ID")
 
@@ -24,7 +23,7 @@ Gmt_matched <- matched.list[[2]]
 X <- model.matrix(outcome ~ covariate1 + covariate2, data=phenotype)
 
 # GREML
-fitM_full <- greml(y=phenotype$outcome, X=X, GRM=list(methylation=Gmt, batch=Batch))
+fitM_full <- greml(y=phenotype$outcome, X=X, GRM=list(batch=Gmt_matched))
 
 # Calculate ICC
 # (variance explained by methylation matrix after accounting for covariates)
