@@ -106,7 +106,7 @@ Gmt_matched <- matched.list[[2]]
 # two fixed effect covariates with GREML and Monte-Carlo Cross-Validation.
 # Returns variance explained by DNA methylation minus the variance explained by
 # fixed effect covariates and similarity matrices specified in random_baseline.
-# Test:validation ratio is 80:20 and randomly sampled 100 times.
+# Training:validation ratio is 80:20 and randomly sampled 100 times.
 Gmt_variance_explained <- omicsR2(outcome = "outcome",
                                   fixed_covar = "covariate1 + covariate2",
  random_full = list(Methylation=Gmt_matched, Batch=Batch),
