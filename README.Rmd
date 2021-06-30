@@ -48,6 +48,9 @@ qgg: an R package for large-scale quantitative genetic analyses,
 Bioinformatics, Volume 36, Issue 8, 15 April 2020, Pages 2614–2615,
 https://doi.org/10.1093/bioinformatics/btz955
 
+See also our [preprint](https://doi.org/10.1101/2021.06.24.21259449) to see
+omicsR2 applied to estimate the epigenome-wide variance explained in childhood 
+outcomes.
 
 ## Installation
 
