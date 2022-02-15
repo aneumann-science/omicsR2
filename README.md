@@ -59,6 +59,11 @@ library(BGData)
 #> Loading required package: BEDMatrix
 #> Loading required package: LinkedMatrix
 #> Loading required package: symDMatrix
+#> 
+#> Attaching package: 'BGData'
+#> The following object is masked from 'package:graphics':
+#> 
+#>     segments
 
 # Load omicsR2 package for GREML analysis
 library(omicsR2)
@@ -140,14 +145,14 @@ Gmt_variance_explained <- omicsR2(outcome = "outcome",
  validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 
 # Examine the variance explained distribution obtained from cross-validation
-head(Gmt_variance_explained)
+head(Gmt_variance_explained$r2_diff)
 #> [1]  0.007 -0.007  0.030  0.037  0.035  0.024
-mean(Gmt_variance_explained)
+mean(Gmt_variance_explained$r2_diff)
 #> [1] 0.01966
-quantile(Gmt_variance_explained)
+quantile(Gmt_variance_explained$r2_diff)
 #>       0%      25%      50%      75%     100% 
 #> -0.02000  0.00875  0.02400  0.03200  0.04800
-hist(Gmt_variance_explained, breaks = 10)
+hist(Gmt_variance_explained$r2_diff, breaks = 10)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />

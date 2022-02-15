@@ -5,8 +5,17 @@
 \title{Estimate variance explained by a similarity matrix above
 variance explained by covariates}
 \usage{
-omicsR2(outcome, fixed_covar, random_full, random_baseline,
-  validation_proportion = 0.2, repetitions = 100, seed = 0)
+omicsR2(
+  outcome,
+  fixed_covar,
+  random_full,
+  random_baseline,
+  data,
+  validation_proportion = 0.2,
+  repetitions = 100,
+  ncores = 1,
+  seed = 0
+)
 }
 \arguments{
 \item{outcome}{A string specifying the outcome variable name.}
@@ -17,14 +26,20 @@ omicsR2(outcome, fixed_covar, random_full, random_baseline,
 
 \item{random_baseline}{A list of similarity matrices to adjust for.}
 
+\item{data}{A data.frame containing outcome and covariate data.}
+
 \item{validation_proportion}{The size of the validation set in percentage.}
 
 \item{repetitions}{How often should cross-validation be repeated.}
 
+\item{ncores}{Number of cores.}
+
 \item{seed}{Seed to ensure reproducibility of cross-validation.}
 }
 \value{
-Vector of variance explained estimates from cross-validation.
+Data.frame with variance explained estimates from cross-validation
+for baseline (r2_covariates) and full model (r2_full), plus the difference
+(r2_diff).
 }
 \description{
 Estimate variance explained by a similarity matrix above
@@ -38,15 +53,19 @@ data("Batch")     # Batch similarity matrix
 
 # Regress outcome on methylation similarity matrix, batch similarity matrix,
 # two fixed effect covariates with GREML and Monte-Carlo Cross-Validation.
-# Returns variance explained minus the variance explained by fixed effect
-# covariates and similarity matrices specified in random_baseline.
-Gmt_variance_explained <- omicsR2(outcome = outcome, fixed_covar = "covariate1 + covariate2",
- random_full = list(Methylation=Gmt, Batch=Batch),
-  random_baseline = list(Batch=Batch), validation_proportion = 0.2,
-  repetitions = 100, seed = 20190405)
+# Returns variance explained by DNA methylation minus the variance explained by
+# fixed effect covariates and similarity matrices specified in random_baseline.
+# Training:validation ratio is 80:20 and randomly sampled 100 times.
+Gmt_variance_explained <- omicsR2(outcome = "outcome",
+                                  fixed_covar = "covariate1 + covariate2",
+                                  random_full = list(Methylation=Gmt_matched, Batch=Batch),
+                                  random_baseline = list(Batch=Batch),
+                                  data = phenotype_matched,
+                                  validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 
-# Examine the variance explained distribution from cross-validation
-mean(Gmt_variance_explained)
-quantile(Gmt_variance_explained)
-hist(Gmt_variance_explained)
+# Examine the variance explained distribution obtained from cross-validation
+head(Gmt_variance_explained$r2_diff)
+mean(Gmt_variance_explained$r2_diff)
+quantile(Gmt_variance_explained$r2_diff)
+hist(Gmt_variance_explained$r2_diff, breaks = 10)
 }

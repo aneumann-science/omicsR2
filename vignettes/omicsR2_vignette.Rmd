@@ -107,8 +107,8 @@ Gmt_variance_explained <- omicsR2(outcome = "outcome",
  validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 
 # Examine the variance explained distribution obtained from cross-validation
-head(Gmt_variance_explained)
-mean(Gmt_variance_explained)
-quantile(Gmt_variance_explained)
-hist(Gmt_variance_explained, breaks = 10)
+head(Gmt_variance_explained$r2_diff)
+mean(Gmt_variance_explained$r2_diff)
+quantile(Gmt_variance_explained$r2_diff)
+hist(Gmt_variance_explained$r2_diff, breaks = 10)
 ```

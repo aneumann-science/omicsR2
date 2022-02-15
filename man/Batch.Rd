@@ -4,7 +4,9 @@
 \name{Batch}
 \alias{Batch}
 \title{Similarity Batch matrix}
-\format{An object of class \code{matrix} with 500 rows and 500 columns.}
+\format{
+
+}
 \usage{
 Batch
 }
