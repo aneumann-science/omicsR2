@@ -8,8 +8,11 @@
 #' @param data A data.frame containing outcome and covariate data.
 #' @param validation_proportion The size of the validation set in percentage.
 #' @param repetitions How often should cross-validation be repeated.
+#' @param ncores Number of cores.
 #' @param seed Seed to ensure reproducibility of cross-validation.
-#' @return Vector of variance explained estimates from cross-validation.
+#' @return Data.frame with variance explained estimates from cross-validation
+#' for baseline (r2_covariates) and full model (r2_full), plus the difference
+#' (r2_diff).
 #' @examples
 #' # Load datasets
 #' data("phenotype") # Phenotype data
@@ -29,11 +32,12 @@
 #'                                   validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 #'
 #' # Examine the variance explained distribution obtained from cross-validation
-#' head(Gmt_variance_explained)
-#' mean(Gmt_variance_explained)
-#' quantile(Gmt_variance_explained)
-#' hist(Gmt_variance_explained, breaks = 10)
-omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, data, validation_proportion = 0.2, repetitions = 100, seed = 0) {
+#' head(Gmt_variance_explained$r2_diff)
+#' mean(Gmt_variance_explained$r2_diff)
+#' quantile(Gmt_variance_explained$r2_diff)
+#' hist(Gmt_variance_explained$r2_diff, breaks = 10)
+
+omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, data, validation_proportion = 0.2, repetitions = 100, ncores = 1, seed = 0) {
   # Set up fixed effects models
   fixed_covar.model <- as.formula(paste(outcome, fixed_covar, sep = " ~ "))
 
@@ -46,17 +50,20 @@ omicsR2 <- function(outcome, fixed_covar, random_full, random_baseline, data, va
   validate <- replicate(repetitions, sample(1:n, validation_proportion*n))
 
   # Fit baseline model
-  baseline.fit <- qgg::greml(y=data[,outcome], X=fixed_covar.model.matrix, GRM=random_baseline, validate = validate)
+  baseline.fit <- qgg::greml(y=data[,outcome], X=fixed_covar.model.matrix, GRM=random_baseline, validate = validate, ncores = ncores)
   # Save cross-validated R2 for baseline model
   r2_covariates <- baseline.fit$accuracy$R2
 
   # Fit full model
-  full.fit <- qgg::greml(y=data[,outcome], X=fixed_covar.model.matrix, GRM=random_full, validate = validate)
+  full.fit <- qgg::greml(y=data[,outcome], X=fixed_covar.model.matrix, GRM=random_full, validate = validate, ncores = ncores)
 
   # Save cross-validated R2 and substract R2 from baseline model
   r2_full <- full.fit$accuracy$R2
   r2_diff <- r2_full - r2_covariates
 
-  # Return R2 of full model minus baseline model
-  return(r2_diff)
+  # Collect all R2 into one data.frame
+  r2.data <- data.frame(r2_covariates, r2_full, r2_diff)
+
+  # Return R2 of baseline and full model, plus the change in R2
+  return(r2.data)
 }

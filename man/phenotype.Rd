@@ -4,13 +4,15 @@
 \name{phenotype}
 \alias{phenotype}
 \title{A data.frame with simulated confounders and outcome}
-\format{A data.frame of 3 variables for 500 participants
+\format{
+A data.frame of 3 variables for 500 participants
 \describe{
   \item{ID}{participant ID}
   \item{covariate1}{Simulated covariate 1}
   \item{covariate1}{Simulated covariate 2}
   \item{outcome}{Simulated outcome}
-}}
+}
+}
 \usage{
 phenotype
 }

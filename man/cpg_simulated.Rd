@@ -4,11 +4,13 @@
 \name{cpg_simulated}
 \alias{cpg_simulated}
 \title{A matrix of DNA methylation at 1000 simulated CpG sites}
-\format{A matrix of 1000 CpG simulated datasets for 500 participants
+\format{
+A matrix of 1000 CpG simulated datasets for 500 participants
 \describe{
   \item{row.names}{participant ID}
   \item{cgXXXXXXXX}{CpG ID}
-}}
+}
+}
 \source{
 \url{https://generationr.nl/}
 }
