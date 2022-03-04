@@ -156,3 +156,81 @@ hist(Gmt_variance_explained$r2_diff, breaks = 10)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+# Multiple Imputation
+# Code adapted from semTools runMI documentation
+
+# Randomly set covariates to missing
+set.seed(20190405)
+phenotype_matched_na <- phenotype_matched
+phenotype_matched_na$covariate1 <- ifelse(phenotype_matched_na$covariate1 <= quantile(phenotype_matched_na$covariate1, .3), NA, phenotype_matched_na$covariate1)
+phenotype_matched_na$covariate2 <- ifelse(phenotype_matched_na$covariate2 <= quantile(phenotype_matched_na$covariate2, .3), NA, phenotype_matched_na$covariate2)
+
+# Impute data five times
+library(mice)
+#> 
+#> Attaching package: 'mice'
+#> The following object is masked from 'package:stats':
+#> 
+#>     filter
+#> The following objects are masked from 'package:base':
+#> 
+#>     cbind, rbind
+miceImps <- mice(phenotype_matched_na)
+#> 
+#>  iter imp variable
+#>   1   1  covariate1  covariate2
+#>   1   2  covariate1  covariate2
+#>   1   3  covariate1  covariate2
+#>   1   4  covariate1  covariate2
+#>   1   5  covariate1  covariate2
+#>   2   1  covariate1  covariate2
+#>   2   2  covariate1  covariate2
+#>   2   3  covariate1  covariate2
+#>   2   4  covariate1  covariate2
+#>   2   5  covariate1  covariate2
+#>   3   1  covariate1  covariate2
+#>   3   2  covariate1  covariate2
+#>   3   3  covariate1  covariate2
+#>   3   4  covariate1  covariate2
+#>   3   5  covariate1  covariate2
+#>   4   1  covariate1  covariate2
+#>   4   2  covariate1  covariate2
+#>   4   3  covariate1  covariate2
+#>   4   4  covariate1  covariate2
+#>   4   5  covariate1  covariate2
+#>   5   1  covariate1  covariate2
+#>   5   2  covariate1  covariate2
+#>   5   3  covariate1  covariate2
+#>   5   4  covariate1  covariate2
+#>   5   5  covariate1  covariate2
+#> Warning: Number of logged events: 1
+
+# Create a list of imputed datasets
+impList <- list()
+for (i in 1:miceImps$m) impList[[i]] <- complete(miceImps, action = i)
+
+# Repeat GREML analysis, but this time on multiply imputed data
+Gmt_variance_explained_imp <- omicsR2_imp(outcome = "outcome",
+                                      fixed_covar = "covariate1 + covariate2",
+                                      random_full = list(Methylation=Gmt_matched, Batch=Batch),
+                                      random_baseline = list(Batch=Batch),
+                                      imp_list = impList,
+                                      validation_proportion = 0.2, repetitions = 100, seed = 20190405)
+
+# Examine the variance explained distribution across cross-validations and
+# imputed datasets
+all_estimates.data <- do.call(rbind, Gmt_variance_explained_imp[[1]])
+hist(all_estimates.data$r2_diff, breaks = 10)
+```
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
+Gmt_variance_explained_imp[[3]]
+#>   r2_covariates_mean_pooled r2_covariates_total_sd r2_full_mean_pooled
+#> 1                  0.333768             0.07494344            0.370664
+#>   r2_full_total_sd r2_diff_mean_pooled r2_diff_total_sd
+#> 1       0.07440577            0.036896       0.02723336
+```
