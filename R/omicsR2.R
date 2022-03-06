@@ -2,7 +2,7 @@
 #' variance explained by covariates
 #'
 #' @param outcome A string specifying the outcome variable name.
-#' @param fixed_covar A string specyfying the fixed effects.
+#' @param fixed_covar A string specifying the fixed effects.
 #' @param random_full A list of similarity matrices to test.
 #' @param random_baseline A list of similarity matrices to adjust for.
 #' @param data A data.frame containing outcome and covariate data.
@@ -26,9 +26,9 @@
 #' # Training:validation ratio is 80:20 and randomly sampled 100 times.
 #' Gmt_variance_explained <- omicsR2(outcome = "outcome",
 #'                                   fixed_covar = "covariate1 + covariate2",
-#'                                   random_full = list(Methylation=Gmt_matched, Batch=Batch),
+#'                                   random_full = list(Methylation=Gmt, Batch=Batch),
 #'                                   random_baseline = list(Batch=Batch),
-#'                                   data = phenotype_matched,
+#'                                   data = phenotype,
 #'                                   validation_proportion = 0.2, repetitions = 100, seed = 20190405)
 #'
 #' # Examine the variance explained distribution obtained from cross-validation
