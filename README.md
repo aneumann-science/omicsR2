@@ -36,9 +36,14 @@ qgg: an R package for large-scale quantitative genetic analyses,
 Bioinformatics, Volume 36, Issue 8, 15 April 2020, Pages 2614–2615,
 <https://doi.org/10.1093/bioinformatics/btz955>
 
-See also our [preprint](https://doi.org/10.1101/2021.06.24.21259449) to
-see omicsR2 applied to estimate the epigenome-wide variance explained in
-childhood outcomes.
+See also our [paper](https://doi.org/10.1186/s13148-022-01268-w) in
+Clinical Epigenetics to see omicsR2 applied to estimate the
+epigenome-wide variance explained in childhood outcomes.
+
+Neumann, A., Pingault, JB., Felix, J.F. et al. Epigenome-wide
+contributions to individual differences in childhood phenotypes: a GREML
+approach. Clin Epigenet 14, 53 (2022).
+<https://doi.org/10.1186/s13148-022-01268-w>
 
 ## Installation
 
@@ -230,7 +235,7 @@ hist(all_estimates.data$r2_diff, breaks = 10)
 ``` r
 Gmt_variance_explained_imp[[3]]
 #>   r2_covariates_mean_pooled r2_covariates_total_sd r2_full_mean_pooled
-#> 1                  0.333768             0.07494344            0.370664
+#> 1                  0.333768             0.07429708            0.370664
 #>   r2_full_total_sd r2_diff_mean_pooled r2_diff_total_sd
-#> 1       0.07440577            0.036896       0.02723336
+#> 1       0.07364816            0.036896       0.02718053
 ```
