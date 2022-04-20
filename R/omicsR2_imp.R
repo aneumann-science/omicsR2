@@ -102,9 +102,9 @@ omicsR2_imp <- function(outcome, fixed_covar, random_full, random_baseline,
   r2_diff_between_variance <- sum((results_per_imp.data$r2_diff_mean - r2_diff_mean_pooled)^2)/(m-1)
 
   # Total variance
-  r2_covariates_total_variance <- r2_covariates_within_variance + r2_covariates_between_variance + r2_covariates_between_variance/3
-  r2_full_total_variance <- r2_full_within_variance + r2_full_between_variance + r2_full_between_variance/3
-  r2_diff_total_variance <- r2_diff_within_variance + r2_diff_between_variance + r2_diff_between_variance/3
+  r2_covariates_total_variance <- r2_covariates_within_variance + r2_covariates_between_variance + r2_covariates_between_variance/m
+  r2_full_total_variance <- r2_full_within_variance + r2_full_between_variance + r2_full_between_variance/m
+  r2_diff_total_variance <- r2_diff_within_variance + r2_diff_between_variance + r2_diff_between_variance/m
 
   # Total SD
   r2_covariates_total_sd <- sqrt(r2_covariates_total_variance)
